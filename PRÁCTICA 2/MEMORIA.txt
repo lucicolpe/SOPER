@@ -1,0 +1,6 @@
+EJERCICIO3: yo añadiría capturas de pantalla para que fuera más gráfico
+
+Cuando se calculan un número de primos muy pequeño los tiempos que salen son esperados, tarda más en crear procesos que en crear hilos (tal y como se explicó en las clases de teoría) ya que los hilos son menos costosos de crear y de eliminar. Sin embargo, con la entrada de 10.000 primos observamos que los resultados son totalmente contrarios (tarda más con hilos que con procesos). Esta situación es debida a que el planificador reparte por grupos y en los procesos todos tendrán el mismo tiempo mientras que los hilos se reparten los tiempos del mismo proceso teniendo por tanto menos tiempo para la realización de la operación pedida. Por tanto, al ejecutar una función que requiere más tiempo del que le damos a cada hilo,el planificador cambia de proceso, haciendo que el proceso de los hilos tarde más en realizar sus operaciones
+
+
+

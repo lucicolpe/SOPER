@@ -1,0 +1,25 @@
+Ejercicio 2:
+
+	En este ejercicio, se pedía realizar un programa que crease un cierto número de procesos hijos pasado como argumento de entrada. Cada hijo, pide por pantalla que se introduzca un nombre, lo escribirá en la memoria compartida creada por el padre e incrementará en una unidad el contador de dicha memoria. Posteriormente, el padre lee el nombre y el identificador escrito por el hijo y lo imprime por pantalla.
+
+	En nuestra implementación, realizamos la creación de la memoria compartida en el padre. Posteriormente realizamos un bucle en el cual el padre va a crear a los hijos. Cada hijo espera un tiempo aleatorio, que será el valor de getpid() por 1000 ( para que tarde un tiempo apreciable), se une a la memoria compartida y después de realizar la petición, escribe el nombre introducido en la memoria, lee el último identificador y lo incrementa en una unidad. Finalmente, envía la señal SIGUSR1 al padre y termina. Por su parte, el padre espera a recibir dicha señal mediante la función pause y la maneja imprimiendo el nombre y el iddentificador por pantalla. Por ese motivo, el puntero a la memoria compartida es una variable global.
+
+	Si el padre no esperase a cada hijo, estos procesos se ejecutarían al azar. De manera que, tanto los hijos como el padre accederían a la memoria compartida aleatoriamente y el padre imprimiría por pantalla datos son sentido.
+
+
+
+
+Ejercicio 4:
+
+	En este ejercicio, se pedía implementar las funciones de la biblioteca de semáforos. En el fichero semaforos.h, a parte de la declaración de as funciones, hemos añadido  dos macros que definen lo que devuelven las funciones: OK si no se ha producido ningún error y ERROR si se ha producido un error. Por otra parte, nuestra funciones de DownMultiple_Semaforo y UpMultiple_Semaforo llaman a Down_Semaforo y Up_Semaforo respectivamente, por cada número de semáforo pasado como argumento.
+
+Ejercicio 5:
+
+	En el ejercicio cinco, se pedía realizar un test comprobando el correcto funcionamiento de la biblioteca de semáforos implementada en el apartado anterior.
+
+Ejercicio 6:
+
+En este ejercicio se pedía implementar el problema del productor-consumidor, en el que el productor escribe letras en una zona de memoria compartida, a la cual accede el consumidor para leer las letras e imprimirlas por pantalla.
+Dado que el enunciado era muy general, hemos decidido implementarlo  mediante dos procesos hijos. El padre crea la memoria compartida y tres  semáforos que se inicializan a uno, tamaño de la memoria y a cero  (respectivamente). El primero, es un semáforo binario que bloquea al proceso que  quiere acceder a la memoria, en caso de que el otro proceso esté accediendo. El  segundo indica el número de espacios libres donde el productor puede escribir. El  tercero indica el número de caracteres que puede leer el consumidor.  Posteriormente, el padre crea tanto el proceso productor como el proceso consumidor que se unen a la memoria compartida. Después, entra en un bucle hasta que escribe la última letra, se separa la memoria y termina su ejecución. En cada iteración, se realiza un down sobre los dos primeros semáforos para indicar que se va a reducir en uno el espacio libre y que se va a acceder a la memoria compartida. Una vez escrito el carácter, se realiza un up sobre el primero y el tercer semáforo, indicando que se deja de utilizar la memoria y para despertar al proceso consumidor para que pueda leer. Por su parte, el proceso consumidor realiza una secuencia de acciones similar sobre los semáforos, pero se realiza un down sobre el tercer semáforo antes de leer y un up sobre el segundo semáforo después para indicar si puede leer y despertar al proceso productor al final. Cuando lee la última letra del abecedario, se separa de la memoria y termina. Finalmente, el padre espera a ambos hijos y libera todos los recursos.
+Otra decisión que hemos tomado ha sido la de limitar el tamaño del buffer a 6 para que se vea con mayor claridad la alternancia que se produce entre consumidor y productor. 
+A la derecha se adjunta una posible salida de la ejecución.  Como se puede observar, productor y consumidor son ejecutados de manera aleatoria y ambos terminan cuando escriben o leen la letra z. 
